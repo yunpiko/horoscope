@@ -14,10 +14,24 @@ import requests
 import json
 from datetime import date
 
+def change_img(event):
+    global photoimg
+    photoimg = tk.PhotoImage(file="image/uranai.png")
+    canvas.create_image(0, 0, image = photoimg, anchor = tk.NW) #画像を指定、 anchorで左上始点を指定。
+
 #画面作成
 root = tk.Tk()
 root.title("占い")
-root.minsize(250,330)
+root.minsize(250,340)
+
+#画像ファイルを指定する
+photoimg = tk.PhotoImage(file = "image/uranai.png")
+
+#キャンバスを準備する
+canvas = tk.Canvas(bg = "#4b0082", width = 270,height = 360,highlightthickness=0)
+canvas.place(x = 0,y = 0)
+
+canvas.create_image(0,0,image = photoimg, anchor = tk.NW)
 
 # 関数たち
 # 占い結果を取得する関数を作る
@@ -38,56 +52,56 @@ def make_btn():
     # 一段目
     btn_1 = tk.Button(text="牡羊座",font=("游ゴシック",10))
     btn_1.bind("<1>",lambda event:clear_btn(event,0)) # ここでラムダ式
-    btn_1.place(x=70,y=70)
+    btn_1.place(x=90,y=70)
 
     btn_2 = tk.Button(text="牡牛座",font=("游ゴシック",10))
     btn_2.bind("<1>",lambda event:clear_btn(event,1))
-    btn_2.place(x=130,y=70)
+    btn_2.place(x=150,y=70)
 
     # 二段目
     btn_3= tk.Button(text="双子座",font=("游ゴシック",10))
     btn_3.bind("<1>",lambda event:clear_btn(event,2))
-    btn_3.place(x=70,y=110)
+    btn_3.place(x=90,y=110)
 
     btn_4= tk.Button(text="蟹座",font=("游ゴシック",10))
     btn_4.bind("<1>",lambda event:clear_btn(event,3))
-    btn_4.place(x=130,y=110)
+    btn_4.place(x=150,y=110)
 
     # 三段目
     btn_5 = tk.Button(text="獅子座",font=("游ゴシック",10))
     btn_5.bind("<1>",lambda event:clear_btn(event,4))
-    btn_5.place(x=70,y=150)
+    btn_5.place(x=90,y=150)
 
     btn_6 = tk.Button(text="乙女座",font=("游ゴシック",10))
     btn_6.bind("<1>",lambda event:clear_btn(event,5)) 
-    btn_6.place(x=130,y=150)
+    btn_6.place(x=150,y=150)
 
     # 四段目
     btn_7 = tk.Button(text="天秤座",font=("游ゴシック",10))
     btn_7.bind("<1>",lambda event:clear_btn(event,6))
-    btn_7.place(x=70,y=190)
+    btn_7.place(x=90,y=190)
 
     btn_8= tk.Button(text="蠍座",font=("游ゴシック",10))
     btn_8.bind("<1>",lambda event:clear_btn(event,7))
-    btn_8.place(x=130,y=190)
+    btn_8.place(x=150,y=190)
 
     # 五段目
     btn_9 = tk.Button(text="射手座",font=("游ゴシック",10))
     btn_9.bind("<1>",lambda event:clear_btn(event,8))
-    btn_9.place(x=70,y=230)
+    btn_9.place(x=90,y=230)
 
     btn_10 = tk.Button(text="山羊座",font=("游ゴシック",10))
     btn_10.bind("<1>",lambda event:clear_btn(event,9))
-    btn_10.place(x=130,y=230)
+    btn_10.place(x=150,y=230)
 
     # 六段目
     btn_11 = tk.Button(text="水瓶座",font=("游ゴシック",10))
     btn_11.bind("<1>",lambda event:clear_btn(event,10))
-    btn_11.place(x=70,y=270)
+    btn_11.place(x=90,y=270)
 
     btn_12 = tk.Button(text="魚座",font=("游ゴシック",10))
     btn_12.bind("<1>",lambda event:clear_btn(event,11))
-    btn_12.place(x=130,y=270)
+    btn_12.place(x=150,y=270)
 
     # ボタン型が入ったリストを作る（消す時便利）
     btn_list = [btn_1,btn_2,btn_3,btn_4,btn_5,btn_6,btn_7,btn_8,btn_9,btn_10,btn_11,btn_12]
@@ -118,27 +132,27 @@ def view_uranai(dic):
 
     color = f"ラッキーカラー:{dic['color']}"
     text2 = tk.Label(text=color)
-    text2.pack()
+    text2.pack(padx=0, pady=3)
 
     item = f"ラッキーアイテム:{dic['item']}"
     text3 = tk.Label(text=item)
-    text3.pack()
+    text3.pack(padx=0, pady=3)
 
     total = "★" * dic["total"]
     text4 = tk.Label(text=f"全体運:{total}")
-    text4.pack()
+    text4.pack(padx=90, pady=3, anchor=tk.W)
 
     love = "★" * dic["love"]
     text5 = tk.Label(text=f"恋愛運:{love}")
-    text5.pack()
+    text5.pack(padx=90, pady=3, anchor=tk.W)
 
     money = "★" * dic["money"]
     text6 = tk.Label(text=f"金運:{money}")
-    text6.pack()
+    text6.pack(padx=90, pady=3, anchor=tk.W)
 
     job = "★" * dic["job"]
     text7 = tk.Label(text=f"仕事運:{job}")
-    text7.pack()
+    text7.pack(padx=90, pady=3, anchor=tk.W)
 
     make_return()
 
@@ -146,9 +160,9 @@ def view_uranai(dic):
 # 戻るボタンを表示する
 def make_return():
     global back
-    back = tk.Button(text="前のページに戻る")
+    back = tk.Button(text=" Back Page ")
     back.bind("<1>",back_main)
-    back.pack()
+    back.pack(padx=0, pady=10,)
 
 
 # スタート画面に戻る
@@ -170,7 +184,7 @@ def back_main(event):
 
 #ずっと出てる文字
 ttl = tk.Label(text="今日の占い",font=("游ゴシック",16),fg="#336699")
-ttl.pack()
+ttl.pack(padx=40, pady=10)
 
 
 # img_file = tk.PhotoImage(file = "image/fm.")
